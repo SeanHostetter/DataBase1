@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddStadium</class>
+ <widget class="QDialog" name="AddStadium">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>605</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Conference</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Team Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Location</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QSpinBox" name="SeatCapSpinBox">
+     <property name="maximum">
+      <number>1000000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0" colspan="3">
+    <widget class="QPushButton" name="pushButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Submit Addition</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Division</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QLineEdit" name="LocationlineEdit"/>
+   </item>
+   <item row="7" column="2">
+    <widget class="QComboBox" name="ConfCpmboBox">
+     <item>
+      <property name="text">
+       <string>National Football Conference</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>American Football Conference</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Seating Capacity</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="2">
+    <widget class="QComboBox" name="RoofComboBox">
+     <item>
+      <property name="text">
+       <string>Open</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Retractable</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Fixed</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="11" column="2">
+    <widget class="QSpinBox" name="DateSpinBox">
+     <property name="minimum">
+      <number>1900</number>
+     </property>
+     <property name="maximum">
+      <number>2100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="label_10">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Input Stadium Information</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Surface Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLineEdit" name="StadiumNameLineEdit"/>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Stadium Roof Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Stadium Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Date Opened</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QLineEdit" name="TeamNameLineEdit"/>
+   </item>
+   <item row="8" column="2">
+    <widget class="QComboBox" name="DivComboBox">
+     <item>
+      <property name="text">
+       <string>NFC North</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>NFC South</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>NFC East</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>NFC West</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AFC North</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AFC South</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AFC East</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AFC West</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="9" column="2">
+    <widget class="QComboBox" name="SurfComboBox">
+     <item>
+      <property name="text">
+       <string>Bermuda Grass</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>FieldTurf Classic HD</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>FieldTurf Revolution</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UBU Sports Speed Series S5-M Synthetic Turf</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Kentucky Bluegrass</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Hellas Matrix Turf</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Platinum TE Paspalum</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Desso GrassMaster</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
