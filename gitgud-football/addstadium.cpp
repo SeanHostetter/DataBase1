@@ -1,10 +1,22 @@
+/**
+ * @file addstadium.cpp
+ */
+
 #include "addstadium.h"
 #include "database.h"
 #include "ui_addstadium.h"
 #include <QSpinBox>
 
 extern std::vector<Stadium> Stadiums;
+extern std::vector<Stadium> currentStadiums;
+extern unsigned int totSeatCap;
+extern bool expandList;
 
+/**
+ * @brief AddStadium::AddStadium
+ * @details AddStadium constructor
+ * @param parent
+ */
 AddStadium::AddStadium(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddStadium)
@@ -17,10 +29,11 @@ AddStadium::~AddStadium()
     delete ui;
 }
 
-//addStadium save
-//assigns new stadium object to data from the form on button click
-//adds new stadium object onto vector
-//closes after these processes
+/**
+ * @brief AddStadium::on_pushButton_clicked
+ * @details adds the information from the form into a new stadium and concatanates it
+ *          onto current stadium vector, then closes itself
+ */
 void AddStadium::on_pushButton_clicked()
 {
     Stadium newStadium;
@@ -34,6 +47,19 @@ void AddStadium::on_pushButton_clicked()
     roof roofIn = roof(this->ui->RoofComboBox->currentIndex());
     short int dateIn = this->ui->DateSpinBox->value();
     newStadium.addStadium(teamIn, stadiumIn, seatIn, locIn, confIn, divIn, surfIn, roofIn, dateIn);
+    totSeatCap += newStadium.sendSeat();
     Stadiums.push_back(newStadium);
+    this->close();
+}
+
+/**
+ * @brief AddStadium::on_addFromFileButton_clicked
+ * @details calls the popVector function again but with the expandList bool flipped, meaning it populates
+ *          with the "Expansion" section too
+ */
+void AddStadium::on_addFromFileButton_clicked()
+{
+    expandList = true;
+    popVector(currentStadiums);
     this->close();
 }

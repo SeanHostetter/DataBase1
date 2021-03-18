@@ -1,28 +1,42 @@
+/**
+ * @file mainwindowclassic.cpp
+ */
+
 #include "mainwindowclassic.h"
 #include "ui_mainwindowclassic.h"
 #include "addstadium.h"
 #include "database.h"
 #include "help.h"
+#include <QMovie>
 
 extern bool login;
 extern QString loginInfo[5][2];
 
+/**
+ * @brief MainWindowClassic::MainWindowClassic
+ * @param parent
+ */
 MainWindowClassic::MainWindowClassic(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindowClassic)
 {
     ui->setupUi(this);
+
+    QMovie *gif1 = new QMovie("football_runner");
+    gif1->setScaledSize(this->ui->gifLabel->maximumSize());
+    this->ui->gifLabel->setMovie(gif1);
+    gif1->start();
+
+    QMovie *gif2 = new QMovie("NFL_logo");
+    gif2->setScaledSize(this->ui->nfl_logo_label->maximumSize());
+    this->ui->nfl_logo_label->setMovie(gif2);
+    gif2->start();
+
 }
 
 MainWindowClassic::~MainWindowClassic()
 {
     delete ui;
-}
-
-
-void MainWindowClassic::on_pushButton_clicked()  //doesnt do anything
-{
-
 }
 
 //checks to see if login data is valid iteratively

@@ -1,3 +1,7 @@
+/**
+ * @file database.cpp
+ */
+
 #include "database.h"
 #include "ui_database.h"
 #include "database.h"
@@ -11,16 +15,28 @@
 #include <fstream>
 #include <QStandardItem>
 #include <QLineEdit>
-//#include "globals.h"
+#include <QAbstractItemModel>
+#include <QMovie>
 
 extern std::vector<Stadium> Stadiums;
+extern std::vector<Stadium> currentStadiums;
 extern bool login;
+extern unsigned int totSeatCap;
 
 DataBase::DataBase(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DataBase)
 {
     ui->setupUi(this);
+
+    QMovie *gif3 = new QMovie("NFL_logo_1");
+    gif3->setScaledSize(this->ui->logo_label->maximumSize());
+    this->ui->logo_label->setMovie(gif3);
+    gif3->start();
+
+    popVector(Stadiums);    //populate stadium vector
+    currentStadiums = Stadiums;
+
     tableWidgetDisplay(Stadiums);
 
     //if user is not logged in, they don't have the ability to edit the table
@@ -45,16 +61,31 @@ void DataBase::on_HelpPushButton_clicked()
     openHelp.exec();
 }
 
-//sort function implemented based on returned value of combo box
-//needs implementation
-void DataBase::on_SortByComboBox_activated(const QString &arg1)
-{
-
-}
-
 //displays and formats table in database window
 //populates table from vector of stadium objects which is passed in
 void DataBase::tableWidgetDisplay(std::vector<Stadium>& StadList){
+
+    //-------------------------------------------------------------------------------------------
+    Stadium tempStad;
+    totSeatCap = 0;
+    if(currentStadiums.size() > 0){
+        totSeatCap += currentStadiums[0].sendSeat();
+    }else{
+        tempStad.addStadium("none found...", "none found...", 0, "none found...", nullConf, nullDivi, nullSurf, nullRoof, 0);
+        currentStadiums.insert(currentStadiums.begin(), tempStad);
+    }
+    for(unsigned long long j = 1; j < currentStadiums.size(); j++){
+        totSeatCap += currentStadiums[j].sendSeat();
+        if(currentStadiums[j].sendStadium() == currentStadiums[j - 1].sendStadium())
+            totSeatCap -= currentStadiums[j].sendSeat();
+    }
+
+    QString SeatCapComma = QString::number(totSeatCap);
+    if(SeatCapComma.length() > 6)
+        SeatCapComma.insert(SeatCapComma.length()-6, ",");  //insert commas in total seat Cap
+    SeatCapComma.insert(SeatCapComma.length()-3, ",");
+    this->ui->totCap->setText(SeatCapComma); //update total seating capacity
+    //-------------------------------------------------------------------------------------------
 
     QString teamIn;
     QString stadiumIn;
@@ -77,7 +108,8 @@ void DataBase::tableWidgetDisplay(std::vector<Stadium>& StadList){
     table->setColumnCount(9);          //9 colums, 1 for each Stadium member
 
     QStringList hLabels;
-    hLabels << "Team Name" << "Stadium Name" << "Seating Capacity" << "Location" << "Conference" << "Division" << "Surface Type" << "Stadium Roof Type" << "Date Opened";
+    hLabels << "Team Name" << "Stadium Name" << "Seating Capacity" << "Location" << "Conference"
+            << "Division" << "Surface Type" << "Stadium Roof Type" << "Date Opened";
     table->setHorizontalHeaderLabels(hLabels);
 
     for(int i = 0; i < table->rowCount(); i++){
@@ -99,7 +131,7 @@ void DataBase::tableWidgetDisplay(std::vector<Stadium>& StadList){
         }
     }
     //sets each row of table to alternate colors
-    table->setAlternatingRowColors(true);
+    //table->setAlternatingRowColors(true);
 
     //stretching each column to equal to fit or a fixed value depending on needed size
     table->horizontalHeader()->resizeSection(0, 170);
@@ -115,13 +147,30 @@ void DataBase::tableWidgetDisplay(std::vector<Stadium>& StadList){
 //calls tableWidgetDisplay function with passed in stadium object vector to update the table live
 void DataBase::on_searchLineEdit_textChanged(const QString &arg1)
 {
+    int index = this->ui->SortByComboBox->currentIndex();
+    currentStadiums = Stadiums;
+    std::vector<Stadium> sortList;     //create vector of stadium objects to insert sorted data into
+    sortStadiums(sortList, index);     //sort data depending on index
+    currentStadiums = sortList;
+
     std::vector<Stadium> searchList;
-    for(unsigned long long i = 0; i < Stadiums.size(); i++){
-        if(searchStadiums(Stadiums[i], arg1)){
-            searchList.push_back(Stadiums[i]);
+    for(unsigned long long i = 0; i < currentStadiums.size(); i++){
+        if(searchStadiums(currentStadiums[i], arg1)){
+            searchList.push_back(currentStadiums[i]);
         }
     }
-    tableWidgetDisplay(searchList);
+    currentStadiums = searchList;
+    tableWidgetDisplay(currentStadiums);
+}
+
+//combobox passes index of changed entry
+//sort by that field and put into new vector thats passed into displayWidget
+void DataBase::on_SortByComboBox_currentIndexChanged(int index)
+{
+    std::vector<Stadium> sortList;     //create vector of stadium objects to insert sorted data into
+    sortStadiums(sortList, index);     //sort data depending on index
+    currentStadiums = sortList;
+    tableWidgetDisplay(currentStadiums);      //pass sorted vector into database display function
 }
 
 //opens the addStadium window
@@ -131,7 +180,8 @@ void DataBase::on_AddNewPushButton_clicked()
     AddStadium openAddStadium;
     openAddStadium.setModal(true);
     openAddStadium.exec();
-    tableWidgetDisplay(Stadiums);
+    Stadiums = currentStadiums;
+    tableWidgetDisplay(currentStadiums);
 }
 
 //save table
@@ -168,3 +218,7 @@ void DataBase::on_pushButton_2_clicked()
     }
     this->close();
 }
+
+
+
+
